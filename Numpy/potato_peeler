@@ -1,0 +1,39 @@
+import numpy as np
+from matplotlib import pyplot as plt
+
+def initialize_potato (radius, height, skin_thickness):
+    #Initialize a potato representes as a cylindrical Numpy array.
+    potato = np.ones ((height, radius*2))
+    potato[:, :skin_thickness] = 0
+    potato[:, -skin_thickness:] = 0
+    return potato
+
+def roll_potato (potato, rotation_angle):
+    #Simulate rolling the potato against an abrasive surface
+    return np.roll (potato, rotation_angle, axis = 1)
+
+def simulate_peeling (radius, height, skin_thickness, rotation_steps):
+    #Simulate the peeling process of a cylindrical potato
+    potato = initialize_potato(radius, height, skin_thickness)
+    peeled_off =[]
+    for step in range (rotation_steps):
+        rotation_angle = 360 / rotation_steps
+        potato = roll_potato(potato, rotation_angle)
+        peeled = np.sum(potato[:, :skin_thickness] == 1) #Count the peeled area
+        peeled_off.append(peeled)
+        return peeled_off
+    
+    potato_radius = 10
+    potato_height = 20
+    skin_thickness = 2
+    rotation_steps = 36 #10 degree rotation steps for a full rotation
+    peeled_off = simulate_peeling (potato_radius, potato_height, skin_thickness, rotation_steps)
+    
+    #Plotting
+    plt.plot(peeled_off)
+    plt.xlabel('Rotation Step')
+    plt.ylabel('Peeled Area')
+    plt.title('Simulated Potato Peeling: Peeled Area vs Rotation Step')
+
+
+    plt.show()

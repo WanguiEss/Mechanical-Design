@@ -1,0 +1,6 @@
+unsorted = [23,1,45,32,90,87,78,78]
+  
+def mergesort(unsorted):
+ midpoint = len(arr)//2
+return merge(unsorted[: midpoint] + unsorted[midpoint:])
+print unsorted([:midpoint])
